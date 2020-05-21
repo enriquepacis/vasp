@@ -31,8 +31,8 @@ def get_db(self, *keys):
             for i, key in enumerate(keys):
                 vals[i] = (at.key_value_pairs.get(key, None)
                            or at.data.get(key, None))
-        except KeyError, e:
-            if e.message == 'no match':
+        except KeyError as e: # KeyError, e:
+            if e == 'no match': # EPB - old --> if e.message == 'no match':
                 pass
     return vals if len(vals) > 1 else vals[0]
 
@@ -498,11 +498,11 @@ def get_pseudopotentials(self):
     hashes = []
     vasp_pp_path = os.environ['VASP_PP_PATH']
     for ppp in paths:
-        with open(os.path.join(vasp_pp_path, ppp), 'r') as f:
+        with open(os.path.join(vasp_pp_path, ppp), 'rb') as f:
             data = f.read()
 
         s = sha1()
-        s.update("blob %u\0" % len(data))
+        s.update("blob %u\0".format(len(data)).encode('utf-8'))
         s.update(data)
         hashes.append(s.hexdigest())
 

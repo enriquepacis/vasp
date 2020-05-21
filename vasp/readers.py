@@ -416,8 +416,8 @@ def read_results(self):
                     try:
                         magnetic_moment = float(line.split()[-1])
                     except:
-                        print 'magmom read error'
-                        print self.directory, line
+                        print('magmom read error')
+                        print(self.directory, line)
 
                 if line.rfind('magnetization (x)') > -1:
                     for m in range(len(atoms)):

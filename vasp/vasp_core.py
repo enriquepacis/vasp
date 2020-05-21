@@ -250,7 +250,7 @@ class Vasp(FileIOCalculator, object):
         # system here.
 
         # Add default parameters if they aren't set otherwise.
-        for key, val in Vasp.default_parameters.iteritems():
+        for key, val in Vasp.default_parameters.items():
             if key not in kwargs and key not in self.parameters:
                 kwargs[key] = val
 
@@ -297,7 +297,7 @@ class Vasp(FileIOCalculator, object):
 
         # Finally run validate functions
         if VASPRC['validate']:
-            for key, val in self.parameters.iteritems():
+            for key, val in self.parameters.items():
                 if key in validate.__dict__:
                     f = validate.__dict__[key]
                     f(self, val)
@@ -331,8 +331,10 @@ class Vasp(FileIOCalculator, object):
         # Now we sort the atoms and generate the list of POTCARS
         # We end up with ppp = [(index_or_symbol, potcar_file, count)]
         # and resort_indices
+        print(self.parameters) # temp - EPB
         setups = self.parameters.get('setups', [])
-        pp = self.parameters['pp']
+        # pp = self.parameters.get('pp') # added by EPB
+        pp = self.parameters['pp'] # original
 
         ppp = []  # [(index_or_symbol, potcar_file, count)]
 
@@ -633,7 +635,7 @@ class Vasp(FileIOCalculator, object):
 
             file_params['ldau_luj'] = ldau_luj
 
-        if not {k: v for k, v in self.parameters.iteritems()
+        if not {k: v for k, v in self.parameters.items()
                 if v is not None} == file_params:
             new_keys = set(self.parameters.keys()) - set(file_params.keys())
             missing_keys = (set(file_params.keys()) -
@@ -643,7 +645,7 @@ class Vasp(FileIOCalculator, object):
             log.debug('params_on_file do not match.')
             log.debug('file-params: {}'.format(file_params))
             log.debug('compared to: {}'.format({k: v for k, v in
-                                                self.parameters.iteritems()
+                                                self.parameters.items()
                                                 if v is not None}))
             system_changes += ['params_on_file']
 

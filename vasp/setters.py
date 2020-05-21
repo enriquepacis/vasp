@@ -47,7 +47,7 @@ def set(self, **kwargs):
 
     # we don't consider None values to be changed if the keyword was
     # not originally in the parameters.
-    cp = {k: v for k, v in changed_parameters.iteritems()
+    cp = {k: v for k, v in changed_parameters.items()
           if v is not None and k not in original_params}
 
     if cp != {}:

@@ -169,7 +169,7 @@ def write_incar(self, incar=None):
 
     with open(incar, 'w') as f:
         f.write('INCAR created by Atomic Simulation Environment\n')
-        for key, val in d.iteritems():
+        for key, val in d.items():
             key = ' ' + key.upper()
             if val is None:
                 # Do not write out None values
@@ -296,8 +296,8 @@ def write_potcar(self, fname=None):
     if fname is None:
         fname = os.path.join(self.directory, 'POTCAR')
 
-    with open(fname, 'wb') as potfile:
+    with open(fname, 'w+') as potfile: # old: with open(fname, 'wb') as potfile:
         for _, pfile, _ in self.ppp_list:
             pfile = os.path.join(os.environ['VASP_PP_PATH'], pfile)
-            with open(pfile) as f:
+            with open(pfile, 'rt') as f: # old: with open(pfile) as f:
                 potfile.write(f.read())
